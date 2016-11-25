@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100">
+<head>
+    <meta charset="UTF-8">
+    <title>Gaat het regenen?</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <link rel="stylesheet" href="https://unpkg.com/tachyons@4.5.3/css/tachyons.min.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    <script>
+
+        $(document).ready(function(){
+
+
+            /*Background color*/
+
+            ///////////////////////////
+
+            var now = new Date(Date.now());
+                formatted = now.getHours();
+
+            if (formatted > 18) { // Night
+                $('body').removeClass();
+                $('body').addClass("dark-gradient");
+            } else { // Day
+                $('body').removeClass();
+                $('body').addClass("blue-gradient");
+            }
+
+            ///////////////////////////
+
+
+
+            function parse(xml){
+
+                var xmlDoc = $.parseXML( xml ),
+                        $xml = $( xmlDoc );
+
+                var currentTemp = $xml.find("weerstation#6344 > temperatuurGC"); // Current temperature
+                    currentDate = $xml.find("weerstation#6344 > datum"); // Current date
+                    pressure = $xml.find("weerstation#6344 > luchtdruk"); // Current atmospheric pressure
+                    rain = $xml.find("weerstation#6344 > regenMMPU").text(); // Rain index
+                    bar = 10;
+                    pressureBar = pressure.text() / bar; // Converts hPa to kPa
+
+                console.log(pressureBar);
+                console.log(pressureBar > 100.914 && pressureBar < 101.9148 && rain > 0);
+                console.log(rain);
+
+                $("#temperature").html(Math.round(currentTemp.text())).append(" &#x2103;");
+                $("#date").html(currentDate).prepend("Laaste update: ");
+
+                if (pressureBar < 100.914) {
+                    $("#forecast").html("storm");
+                } else if (pressureBar > 100.914 && pressureBar < 101.9148 && rain < 0.05) { //102.269
+                    $("#forecast").html("it might rain");
+                } else if (pressureBar > 100.914 && pressureBar < 101.9148 && rain < 2.5) {
+                    $("#forecast").html("Light rain");
+                } else if (pressureBar > 100.914 && pressureBar < 101.9148 && rain > 2.5 && rain < 7.6  ) {
+                    $("#forecast").html("Moderate rain");
+                }  else if (pressureBar > 100.914 && pressureBar < 101.9148 && rain > 7.6 && rain < 50  ) {
+                    $("#forecast").html("Heavy rain");
+                } else if (pressureBar > 100.914 && pressureBar < 101.9148 && rain > 50  ) {
+                    $("#forecast").html("Violent rain");
+                } else {
+                    $("#forecast").html("no rain");
+                }
+            }
+
+
+            $.ajax({
+                url: 'http://xml.buienradar.nl/', // name of file you want to parse
+                dataType: "text",
+                success: parse,
+                error: function(){alert("Error: Something went wrong");}
+            });
+        });
+    </script>
+
+    <style>
+        .blue-gradient {
+            background: #24C6DC; /* fallback for old browsers */
+            background: -webkit-linear-gradient(#514A9D, #24C6DC); /* Chrome 10-25, Safari 5.1-6 */
+            background: linear-gradient(#514A9D, #24C6DC); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        }
+        .dark-gradient {
+            background: #4b6cb7; /* fallback for old browsers */
+            background: -webkit-linear-gradient(#182848, #4b6cb7); /* Chrome 10-25, Safari 5.1-6 */
+            background: linear-gradient(#182848, #4b6cb7); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+        }
+
+        html * {
+            -webkit-font-smoothing: antialiased;
+        }
+    </style>
+
+
+</head>
+<body class="blue-gradient h-100">
+<div class="mw7 center pa3 white">
+    <h2 class="f1 fw1 lh-solid">Gaat het regenen?</h2>
+</div>
+<div class="mw7 center pa3 white">
+    <h1 class="f-headline fw7 lh-solid" id="forecast"></h1>
+    <p class="dib f3 fw1 mt0" id="temperature"></p>
+    <p class="f6 fw3 white-60 mt0" id="date"></p>
+    <p class="f6 mt6 tr">Bron: <a class="white dim" href="http://www.buienradar.nl">http://www.buienradar.nl</a></p>
+</div>
+</body>
+</html>
