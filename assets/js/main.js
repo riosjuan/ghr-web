@@ -1,6 +1,7 @@
 /**
  * Created by Juan Rios on 25/11/2016.
  */
+// decending sort
 
 function parse(xml){
 
@@ -9,7 +10,7 @@ function parse(xml){
 
     stationLoc = $xml.find("weerstations > weerstation").map(function() {
         return  {
-            name: $(this).find("stationnaam").text(),
+            name: $(this).find("stationnaam").attr("regio"),
             id:  $(this).find("stationcode").text()
         }
     }).get();
@@ -25,7 +26,7 @@ function parse(xml){
 $(document).ready(function(){
 
     $.ajax({
-        url: 'https://xml.buienradar.nl/', // name of file you want to parse
+        url: "https://xml.buienradar.nl/",
         dataType: "text",
         success: parse,
         error: function(){alert("Error: Oops! something went wrong");}
@@ -34,9 +35,11 @@ $(document).ready(function(){
     /*Background color*/
 
     var now = new Date(Date.now());
-        formatted = now.getHours();
+        formated = now.getHours();
 
-    if (formatted > 17) {
+        console.log("time " + formated)
+
+    if (formated > 17 && formated < 6 ) {
         $('body').removeClass().addClass("night-gradient"); // Night
     } else {
         $('body').removeClass().addClass("day-gradient"); // Day
@@ -52,7 +55,7 @@ function selectionLoc() {
 
     var currentTemp = $xml.find("weerstation#" + selectedID + "> temperatuurGC"); // Current temperature
         currentDate = $xml.find("weerstation#" + selectedID + "> datum"); // Current date
-        locatie = $xml.find("weerstation#"+ selectedID + "> stationnaam").text();
+        locatie = $xml.find("weerstation#"+ selectedID + "> stationnaam").attr("regio");
         pressure = $xml.find("weerstation#" + selectedID + "> luchtdruk"); // Current atmospheric pressure
         rain = $xml.find("weerstation#" + selectedID + "> regenMMPU").text(); // Rain index
         bar = 10;
@@ -63,8 +66,8 @@ function selectionLoc() {
     console.log(rain);
 
     $("#temperature").html(Math.round(currentTemp.text())).append("&#x2103;");
-    $("#date").html(currentDate).prepend("Laaste update: ");
-    $("#station").html(locatie);
+    $("#date").html(currentDate).prepend("Last updated: ");
+    $("#station").html(locatie).prepend("📍");
 
 
     if (pressureBar < 100.914) {
