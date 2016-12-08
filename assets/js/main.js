@@ -85,7 +85,7 @@ function selectionLoc() {
         $("#forecast-sub").html("There is violent rain expected in the next two hours");
     } else {
         $("#forecast").html("No");
-        $("#forecast-sub").html("There is not rain expected in the next two hours");
+        $("#forecast-sub").html("There is no rain expected in the next two hours");
     }
 
 }
