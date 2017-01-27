@@ -39,10 +39,12 @@ $(document).ready(function(){
 
         console.log("time " + formated)
 
-    if (formated > 17 && formated < 6 ) {
+    if (formated > 18 ) {
         $('body').removeClass().addClass("night-gradient"); // Night
-    } else {
+    } else if (formated < 5) {
         $('body').removeClass().addClass("day-gradient"); // Day
+    } else {
+        $('body').removeClass().addClass("night-gradient"); // Night
     }
 });
 
@@ -64,6 +66,7 @@ function selectionLoc() {
     console.log(pressureBar);
     console.log(pressureBar > 100.914 && pressureBar < 101.9148 && rain > 0);
     console.log(rain);
+    console.log(currentTemp.text());
 
     $("#temperature").html(Math.round(currentTemp.text())).append("&#x2103;");
     $("#date").html(currentDate).prepend("Last updated: ");

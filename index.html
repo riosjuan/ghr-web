@@ -33,30 +33,22 @@
 </head>
 
 <body class="bg-blue">
-<div class="flex items-center justify-center vh-100 pa3">
+<div class="flex items-center justify-center vh-100 pa4">
     <div>
-        <div class="mw7 center mb3">
-            <h1 class="f1 white">Will it rain?</h1>
-            <label class="db fw6 lh-copy f1 white" for="stations">Your city: </label>
-            <select id="stations" onchange="selectionLoc()">
-                <option value=""></option>
-            </select>
+        <div class="mw6 center">
+            <h1 class="f3-ns f4 fw4 white">Will it rain in
+                <select id="stations" onchange="selectionLoc()" class="input-reset outline-transparent white bt-0 bl-0 br-0 br0 bb b--white bg-transparent dib">
+                    <option value=""></option>
+                </select>
+            </h1>
         </div>
 
-        <div class="dn mw7 pa4 br3 bg-white card-shadow" id="infoCard">
-            <div class="dt w-100">
-                <div class="dtc v-base w-50">
-                    <p class="f5 fw6 mt0 mb0 ttu tracked">Will it rain?</p>
-                </div>
-                <div class="dtc v-base tr w-50">
-                    <p class="f2 fw4 mt0 mb0" id="temperature">0</p>
-                </div>
-            </div>
-            <h1 class="f-headline fw1 mb0" id="forecast">Maybe</h1>
-            <p class="f3 fw4 lh-title black-70" id="forecast-sub">There is not rain expected in the next two hours</p>
-            <p class="" id="station">City</p>
+        <div class="dn mw6 white" id="infoCard">
+            <h1 class="f-headline fw1 mt0 mb0 light-green" id="forecast">Maybe</h1>
+            <p class="f3-ns f4 fw4 lh-title white mb0" id="forecast-sub">There is not rain expected in the next two hours</p>
+            <p class="f3-ns f4 fw4 lh-title white-60 mt1" id="temperature">0</p>
             <p class="f6 fw4" id="date"></p>
-            <p class="f6 mt3"><a class="dim" href="http://www.buienradar.nl">http://www.buienradar.nl</a></p>
+            <p class="f6 mt3"><a class="dim white-60" href="http://www.buienradar.nl">http://www.buienradar.nl</a></p>
         </div>
     </div>
 </div>
