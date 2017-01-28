@@ -1,7 +1,27 @@
 /**
  * Created by Juan Rios on 25/11/2016.
  */
+
+
 // decending sort
+$.fn.extend({
+    sortSelect() {
+        let options = $(this).find("option"),
+            arr = options.map(function(_, o) { return { t: $(o).text(), v: o.value }; }).get();
+
+        arr.sort((o1, o2) => { // sort select
+            let t1 = o1.t.toLowerCase(),
+            t2 = o2.t.toLowerCase();
+        return t1 > t2 ? 1 : t1 < t2 ? -1 : 0;
+    });
+
+        options.each((i, o) => {
+            o.value = arr[i].v;
+        $(o).text(arr[i].t);
+    });
+    }
+});
+
 
 function parse(xml){
 
@@ -19,7 +39,7 @@ function parse(xml){
         $("#stations")
             .append($("<option></option>")
                 .attr("value", value.id)
-                .text(value.name));
+                .text(value.name)).sortSelect();
     });
 }
 
