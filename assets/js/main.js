@@ -37,14 +37,17 @@ $(document).ready(function(){
     var now = new Date(Date.now());
         formated = now.getHours();
 
-        console.log("time " + formated)
+        console.log("Hour " + formated)
 
     if (formated > 18 ) {
         $('body').removeClass().addClass("night-gradient"); // Night
-    } else if (formated < 5) {
+        console.log("Night");
+    } else if (formated > 5 ) {
         $('body').removeClass().addClass("day-gradient"); // Day
+        console.log("Day");
     } else {
         $('body').removeClass().addClass("night-gradient"); // Night
+        console.log("Night");
     }
 });
 
