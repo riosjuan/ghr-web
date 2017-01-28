@@ -92,7 +92,7 @@ function selectionLoc() {
     console.log(currentTemp.text());
 
     $("#temperature").html(Math.round(currentTemp.text())).append("&#x2103;");
-    $("#date").html(currentDate).prepend("Last updated: ");
+    $("#date").html(currentDate).prepend("Laaste update: ");
     $("#station").html(locatie).prepend("📍");
 
 
@@ -107,11 +107,11 @@ function selectionLoc() {
     }  else if (pressureBar > 100.914 && pressureBar < 101.9148 && rain > 7.6 && rain < 50  ) {
         $("#forecast").html("Heavy rain");
     } else if (pressureBar > 100.914 && pressureBar < 101.9148 && rain > 50  ) {
-        $("#forecast").html("Yes");
+        $("#forecast").html("Ja");
         $("#forecast-sub").html("There is violent rain expected in the next two hours");
     } else {
-        $("#forecast").html("No");
-        $("#forecast-sub").html("There is no rain expected in the next two hours");
+        $("#forecast").html("Nee");
+        $("#forecast-sub").html("Er is geen regen verwacht in de komende 2 uur");
     }
 
 }
