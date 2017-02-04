@@ -54,7 +54,7 @@ $(document).ready(function(){
 
     /*Background color*/
 
-    var now = new Date(Date.now());
+    let now = new Date(Date.now());
         formated = now.getHours();
 
         console.log("Hour " + formated)
@@ -86,6 +86,7 @@ function selectionLoc() {
         bar = 10;
         pressureBar = pressure.text() / bar; // Converts hPa to kPa
 
+    console.log(locatie);
     console.log(pressureBar);
     console.log(pressureBar > 100.914 && pressureBar < 101.9148 && rain > 0);
     console.log(rain);
@@ -95,23 +96,35 @@ function selectionLoc() {
     $("#date").html(currentDate).prepend("Laaste update: ");
     $("#station").html(locatie).prepend("📍");
 
+        // Very light rain
+    if (pressureBar > 100.914 && pressureBar < 101.9148 && rain < 0.05) { //102.269
+        $("#forecast").html("Misschien");
+        $("#forecast-sub").html("Het kan een klein beetje regen vallen in de komende uur");
 
-    if (pressureBar < 100.914) {
-        $("#forecast").html("storm");
-    } else if (pressureBar > 100.914 && pressureBar < 101.9148 && rain < 0.05) { //102.269
-        $("#forecast").html("it might rain");
+        // Light rain
     } else if (pressureBar > 100.914 && pressureBar < 101.9148 && rain < 2.5) {
-        $("#forecast").html("Light rain");
+        $("#forecast").html("Ja");
+        $("#forecast-sub").html("Er is licht regen verwacht in de komende uur");
+
+        // Moderate rain
     } else if (pressureBar > 100.914 && pressureBar < 101.9148 && rain > 2.5 && rain < 7.6  ) {
-        $("#forecast").html("Moderate rain");
+        $("#forecast").html("Ja");
+        $("#forecast-sub").html("Er is matige regen verwacht in de komende uur");
+
+        // Heavy rain
     }  else if (pressureBar > 100.914 && pressureBar < 101.9148 && rain > 7.6 && rain < 50  ) {
-        $("#forecast").html("Heavy rain");
+        $("#forecast").html("Ja");
+        $("#forecast-sub").html("Er is zware regen verwacht in de komende uur");
+
+        // Violent rain
     } else if (pressureBar > 100.914 && pressureBar < 101.9148 && rain > 50  ) {
         $("#forecast").html("Ja");
-        $("#forecast-sub").html("There is violent rain expected in the next two hours");
+        $("#forecast-sub").html("Er is heftige regen verwacht in de komende uur");
+
+        // No rain
     } else {
         $("#forecast").html("Nee");
-        $("#forecast-sub").html("Er is geen regen verwacht in de komende 2 uur");
+        $("#forecast-sub").html("Er is geen regen verwacht in de komende uur");
     }
 
 }
